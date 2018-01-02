@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swjtu.WJKeServers.mapper.PropertyphotoMapper" >
+  <resultMap id="BaseResultMap" type="com.swjtu.WJKeServers.entity.Propertyphoto" >
+    <id column="PhotoID" property="photoid" jdbcType="CHAR" />
+    <result column="PropertyID" property="propertyid" jdbcType="CHAR" />
+    <result column="PhotoUrl" property="photourl" jdbcType="NVARCHAR" />
+    <result column="PhotoName" property="photoname" jdbcType="VARCHAR" />
+    <result column="PropertyImgType" property="propertyimgtype" jdbcType="VARCHAR" />
+    <result column="FrontCover" property="frontcover" jdbcType="BIT" />
+    <result column="ExDate" property="exdate" jdbcType="TIMESTAMP" />
+    <result column="ModDate" property="moddate" jdbcType="TIMESTAMP" />
+    <result column="FlagTrashed" property="flagtrashed" jdbcType="BIT" />
+    <result column="FlagDeleted" property="flagdeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PhotoID, PropertyID, PhotoUrl, PhotoName, PropertyImgType, FrontCover, ExDate, ModDate, 
+    FlagTrashed, FlagDeleted
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.swjtu.WJKeServers.entity.PropertyphotoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PropertyPhoto
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PropertyPhoto
+    where PhotoID = #{photoid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PropertyPhoto
+    where PhotoID = #{photoid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.swjtu.WJKeServers.entity.PropertyphotoExample" >
+    delete from PropertyPhoto
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.swjtu.WJKeServers.entity.Propertyphoto" >
+    insert into PropertyPhoto (PhotoID, PropertyID, PhotoUrl, 
+      PhotoName, PropertyImgType, FrontCover, 
+      ExDate, ModDate, FlagTrashed, 
+      FlagDeleted)
+    values (#{photoid,jdbcType=CHAR}, #{propertyid,jdbcType=CHAR}, #{photourl,jdbcType=NVARCHAR}, 
+      #{photoname,jdbcType=VARCHAR}, #{propertyimgtype,jdbcType=VARCHAR}, #{frontcover,jdbcType=BIT}, 
+      #{exdate,jdbcType=TIMESTAMP}, #{moddate,jdbcType=TIMESTAMP}, #{flagtrashed,jdbcType=BIT}, 
+      #{flagdeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.swjtu.WJKeServers.entity.Propertyphoto" >
+    insert into PropertyPhoto
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="photoid != null" >
+        PhotoID,
+      </if>
+      <if test="propertyid != null" >
+        PropertyID,
+      </if>
+      <if test="photourl != null" >
+        PhotoUrl,
+      </if>
+      <if test="photoname != null" >
+        PhotoName,
+      </if>
+      <if test="propertyimgtype != null" >
+        PropertyImgType,
+      </if>
+      <if test="frontcover != null" >
+        FrontCover,
+      </if>
+      <if test="exdate != null" >
+        ExDate,
+      </if>
+      <if test="moddate != null" >
+        ModDate,
+      </if>
+      <if test="flagtrashed != null" >
+        FlagTrashed,
+      </if>
+      <if test="flagdeleted != null" >
+        FlagDeleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="photoid != null" >
+        #{photoid,jdbcType=CHAR},
+      </if>
+      <if test="propertyid != null" >
+        #{propertyid,jdbcType=CHAR},
+      </if>
+      <if test="photourl != null" >
+        #{photourl,jdbcType=NVARCHAR},
+      </if>
+      <if test="photoname != null" >
+        #{photoname,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyimgtype != null" >
+        #{propertyimgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="frontcover != null" >
+        #{frontcover,jdbcType=BIT},
+      </if>
+      <if test="exdate != null" >
+        #{exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moddate != null" >
+        #{moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flagtrashed != null" >
+        #{flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="flagdeleted != null" >
+        #{flagdeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.swjtu.WJKeServers.entity.PropertyphotoExample" resultType="java.lang.Integer" >
+    select count(*) from PropertyPhoto
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PropertyPhoto
+    <set >
+      <if test="record.photoid != null" >
+        PhotoID = #{record.photoid,jdbcType=CHAR},
+      </if>
+      <if test="record.propertyid != null" >
+        PropertyID = #{record.propertyid,jdbcType=CHAR},
+      </if>
+      <if test="record.photourl != null" >
+        PhotoUrl = #{record.photourl,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.photoname != null" >
+        PhotoName = #{record.photoname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertyimgtype != null" >
+        PropertyImgType = #{record.propertyimgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.frontcover != null" >
+        FrontCover = #{record.frontcover,jdbcType=BIT},
+      </if>
+      <if test="record.exdate != null" >
+        ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.moddate != null" >
+        ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flagtrashed != null" >
+        FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="record.flagdeleted != null" >
+        FlagDeleted = #{record.flagdeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PropertyPhoto
+    set PhotoID = #{record.photoid,jdbcType=CHAR},
+      PropertyID = #{record.propertyid,jdbcType=CHAR},
+      PhotoUrl = #{record.photourl,jdbcType=NVARCHAR},
+      PhotoName = #{record.photoname,jdbcType=VARCHAR},
+      PropertyImgType = #{record.propertyimgtype,jdbcType=VARCHAR},
+      FrontCover = #{record.frontcover,jdbcType=BIT},
+      ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{record.flagdeleted,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.swjtu.WJKeServers.entity.Propertyphoto" >
+    update PropertyPhoto
+    <set >
+      <if test="propertyid != null" >
+        PropertyID = #{propertyid,jdbcType=CHAR},
+      </if>
+      <if test="photourl != null" >
+        PhotoUrl = #{photourl,jdbcType=NVARCHAR},
+      </if>
+      <if test="photoname != null" >
+        PhotoName = #{photoname,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyimgtype != null" >
+        PropertyImgType = #{propertyimgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="frontcover != null" >
+        FrontCover = #{frontcover,jdbcType=BIT},
+      </if>
+      <if test="exdate != null" >
+        ExDate = #{exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moddate != null" >
+        ModDate = #{moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flagtrashed != null" >
+        FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="flagdeleted != null" >
+        FlagDeleted = #{flagdeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where PhotoID = #{photoid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.swjtu.WJKeServers.entity.Propertyphoto" >
+    update PropertyPhoto
+    set PropertyID = #{propertyid,jdbcType=CHAR},
+      PhotoUrl = #{photourl,jdbcType=NVARCHAR},
+      PhotoName = #{photoname,jdbcType=VARCHAR},
+      PropertyImgType = #{propertyimgtype,jdbcType=VARCHAR},
+      FrontCover = #{frontcover,jdbcType=BIT},
+      ExDate = #{exdate,jdbcType=TIMESTAMP},
+      ModDate = #{moddate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{flagdeleted,jdbcType=BIT}
+    where PhotoID = #{photoid,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swjtu.WJKeServers.mapper.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.swjtu.WJKeServers.entity.Employee" >
+    <id column="EmpID" property="empid" jdbcType="CHAR" />
+    <result column="EmpNo" property="empno" jdbcType="NVARCHAR" />
+    <result column="PositionName" property="positionname" jdbcType="VARCHAR" />
+    <result column="EmpName" property="empname" jdbcType="NVARCHAR" />
+    <result column="EmpSex" property="empsex" jdbcType="VARCHAR" />
+    <result column="brief" property="brief" jdbcType="NVARCHAR" />
+    <result column="Tel" property="tel" jdbcType="VARCHAR" />
+    <result column="DeptTel" property="depttel" jdbcType="VARCHAR" />
+    <result column="RollIn" property="rollin" jdbcType="TIMESTAMP" />
+    <result column="EmpPhoto" property="empphoto" jdbcType="NVARCHAR" />
+    <result column="PassWordWeb" property="passwordweb" jdbcType="VARCHAR" />
+    <result column="ExDate" property="exdate" jdbcType="TIMESTAMP" />
+    <result column="ModDate" property="moddate" jdbcType="TIMESTAMP" />
+    <result column="FlagTrashed" property="flagtrashed" jdbcType="BIT" />
+    <result column="FlagDeleted" property="flagdeleted" jdbcType="BIT" />
+    <result column="StoreID" property="storeid" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EmpID, EmpNo, PositionName, EmpName, EmpSex, brief, Tel, DeptTel, RollIn, EmpPhoto, 
+    PassWordWeb, ExDate, ModDate, FlagTrashed, FlagDeleted, StoreID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.swjtu.WJKeServers.entity.EmployeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from Employee
+    where EmpID = #{empid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from Employee
+    where EmpID = #{empid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.swjtu.WJKeServers.entity.EmployeeExample" >
+    delete from Employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.swjtu.WJKeServers.entity.Employee" >
+    insert into Employee (EmpID, EmpNo, PositionName, 
+      EmpName, EmpSex, brief, 
+      Tel, DeptTel, RollIn, 
+      EmpPhoto, PassWordWeb, ExDate, 
+      ModDate, FlagTrashed, FlagDeleted, 
+      StoreID)
+    values (#{empid,jdbcType=CHAR}, #{empno,jdbcType=NVARCHAR}, #{positionname,jdbcType=VARCHAR}, 
+      #{empname,jdbcType=NVARCHAR}, #{empsex,jdbcType=VARCHAR}, #{brief,jdbcType=NVARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{depttel,jdbcType=VARCHAR}, #{rollin,jdbcType=TIMESTAMP}, 
+      #{empphoto,jdbcType=NVARCHAR}, #{passwordweb,jdbcType=VARCHAR}, #{exdate,jdbcType=TIMESTAMP}, 
+      #{moddate,jdbcType=TIMESTAMP}, #{flagtrashed,jdbcType=BIT}, #{flagdeleted,jdbcType=BIT}, 
+      #{storeid,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.swjtu.WJKeServers.entity.Employee" >
+    insert into Employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="empid != null" >
+        EmpID,
+      </if>
+      <if test="empno != null" >
+        EmpNo,
+      </if>
+      <if test="positionname != null" >
+        PositionName,
+      </if>
+      <if test="empname != null" >
+        EmpName,
+      </if>
+      <if test="empsex != null" >
+        EmpSex,
+      </if>
+      <if test="brief != null" >
+        brief,
+      </if>
+      <if test="tel != null" >
+        Tel,
+      </if>
+      <if test="depttel != null" >
+        DeptTel,
+      </if>
+      <if test="rollin != null" >
+        RollIn,
+      </if>
+      <if test="empphoto != null" >
+        EmpPhoto,
+      </if>
+      <if test="passwordweb != null" >
+        PassWordWeb,
+      </if>
+      <if test="exdate != null" >
+        ExDate,
+      </if>
+      <if test="moddate != null" >
+        ModDate,
+      </if>
+      <if test="flagtrashed != null" >
+        FlagTrashed,
+      </if>
+      <if test="flagdeleted != null" >
+        FlagDeleted,
+      </if>
+      <if test="storeid != null" >
+        StoreID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="empid != null" >
+        #{empid,jdbcType=CHAR},
+      </if>
+      <if test="empno != null" >
+        #{empno,jdbcType=NVARCHAR},
+      </if>
+      <if test="positionname != null" >
+        #{positionname,jdbcType=VARCHAR},
+      </if>
+      <if test="empname != null" >
+        #{empname,jdbcType=NVARCHAR},
+      </if>
+      <if test="empsex != null" >
+        #{empsex,jdbcType=VARCHAR},
+      </if>
+      <if test="brief != null" >
+        #{brief,jdbcType=NVARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="depttel != null" >
+        #{depttel,jdbcType=VARCHAR},
+      </if>
+      <if test="rollin != null" >
+        #{rollin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="empphoto != null" >
+        #{empphoto,jdbcType=NVARCHAR},
+      </if>
+      <if test="passwordweb != null" >
+        #{passwordweb,jdbcType=VARCHAR},
+      </if>
+      <if test="exdate != null" >
+        #{exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moddate != null" >
+        #{moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flagtrashed != null" >
+        #{flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="flagdeleted != null" >
+        #{flagdeleted,jdbcType=BIT},
+      </if>
+      <if test="storeid != null" >
+        #{storeid,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.swjtu.WJKeServers.entity.EmployeeExample" resultType="java.lang.Integer" >
+    select count(*) from Employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update Employee
+    <set >
+      <if test="record.empid != null" >
+        EmpID = #{record.empid,jdbcType=CHAR},
+      </if>
+      <if test="record.empno != null" >
+        EmpNo = #{record.empno,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.positionname != null" >
+        PositionName = #{record.positionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empname != null" >
+        EmpName = #{record.empname,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.empsex != null" >
+        EmpSex = #{record.empsex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brief != null" >
+        brief = #{record.brief,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        Tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depttel != null" >
+        DeptTel = #{record.depttel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rollin != null" >
+        RollIn = #{record.rollin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.empphoto != null" >
+        EmpPhoto = #{record.empphoto,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.passwordweb != null" >
+        PassWordWeb = #{record.passwordweb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exdate != null" >
+        ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.moddate != null" >
+        ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flagtrashed != null" >
+        FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="record.flagdeleted != null" >
+        FlagDeleted = #{record.flagdeleted,jdbcType=BIT},
+      </if>
+      <if test="record.storeid != null" >
+        StoreID = #{record.storeid,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update Employee
+    set EmpID = #{record.empid,jdbcType=CHAR},
+      EmpNo = #{record.empno,jdbcType=NVARCHAR},
+      PositionName = #{record.positionname,jdbcType=VARCHAR},
+      EmpName = #{record.empname,jdbcType=NVARCHAR},
+      EmpSex = #{record.empsex,jdbcType=VARCHAR},
+      brief = #{record.brief,jdbcType=NVARCHAR},
+      Tel = #{record.tel,jdbcType=VARCHAR},
+      DeptTel = #{record.depttel,jdbcType=VARCHAR},
+      RollIn = #{record.rollin,jdbcType=TIMESTAMP},
+      EmpPhoto = #{record.empphoto,jdbcType=NVARCHAR},
+      PassWordWeb = #{record.passwordweb,jdbcType=VARCHAR},
+      ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{record.flagdeleted,jdbcType=BIT},
+      StoreID = #{record.storeid,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.swjtu.WJKeServers.entity.Employee" >
+    update Employee
+    <set >
+      <if test="empno != null" >
+        EmpNo = #{empno,jdbcType=NVARCHAR},
+      </if>
+      <if test="positionname != null" >
+        PositionName = #{positionname,jdbcType=VARCHAR},
+      </if>
+      <if test="empname != null" >
+        EmpName = #{empname,jdbcType=NVARCHAR},
+      </if>
+      <if test="empsex != null" >
+        EmpSex = #{empsex,jdbcType=VARCHAR},
+      </if>
+      <if test="brief != null" >
+        brief = #{brief,jdbcType=NVARCHAR},
+      </if>
+      <if test="tel != null" >
+        Tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="depttel != null" >
+        DeptTel = #{depttel,jdbcType=VARCHAR},
+      </if>
+      <if test="rollin != null" >
+        RollIn = #{rollin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="empphoto != null" >
+        EmpPhoto = #{empphoto,jdbcType=NVARCHAR},
+      </if>
+      <if test="passwordweb != null" >
+        PassWordWeb = #{passwordweb,jdbcType=VARCHAR},
+      </if>
+      <if test="exdate != null" >
+        ExDate = #{exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moddate != null" >
+        ModDate = #{moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flagtrashed != null" >
+        FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="flagdeleted != null" >
+        FlagDeleted = #{flagdeleted,jdbcType=BIT},
+      </if>
+      <if test="storeid != null" >
+        StoreID = #{storeid,jdbcType=CHAR},
+      </if>
+    </set>
+    where EmpID = #{empid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.swjtu.WJKeServers.entity.Employee" >
+    update Employee
+    set EmpNo = #{empno,jdbcType=NVARCHAR},
+      PositionName = #{positionname,jdbcType=VARCHAR},
+      EmpName = #{empname,jdbcType=NVARCHAR},
+      EmpSex = #{empsex,jdbcType=VARCHAR},
+      brief = #{brief,jdbcType=NVARCHAR},
+      Tel = #{tel,jdbcType=VARCHAR},
+      DeptTel = #{depttel,jdbcType=VARCHAR},
+      RollIn = #{rollin,jdbcType=TIMESTAMP},
+      EmpPhoto = #{empphoto,jdbcType=NVARCHAR},
+      PassWordWeb = #{passwordweb,jdbcType=VARCHAR},
+      ExDate = #{exdate,jdbcType=TIMESTAMP},
+      ModDate = #{moddate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{flagdeleted,jdbcType=BIT},
+      StoreID = #{storeid,jdbcType=CHAR}
+    where EmpID = #{empid,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swjtu.WJKeServers.mapper.PropertyMapper" >
+  <resultMap id="BaseResultMap" type="com.swjtu.WJKeServers.entity.Property" >
+    <id column="PropertyID" property="propertyid" jdbcType="CHAR" />
+    <result column="EstateID" property="estateid" jdbcType="CHAR" />
+    <result column="EmpID" property="empid" jdbcType="CHAR" />
+    <result column="PropertyNo" property="propertyno" jdbcType="VARCHAR" />
+    <result column="Title" property="title" jdbcType="NVARCHAR" />
+    <result column="Square" property="square" jdbcType="DOUBLE" />
+    <result column="Price" property="price" jdbcType="DOUBLE" />
+    <result column="priceType" property="pricetype" jdbcType="NVARCHAR" />
+    <result column="UnitPrice" property="unitprice" jdbcType="DOUBLE" />
+    <result column="unitPriceType" property="unitpricetype" jdbcType="NVARCHAR" />
+    <result column="rentPrice" property="rentprice" jdbcType="DOUBLE" />
+    <result column="rentPriceType" property="rentpricetype" jdbcType="NVARCHAR" />
+    <result column="firstPay" property="firstpay" jdbcType="VARCHAR" />
+    <result column="monthPay" property="monthpay" jdbcType="VARCHAR" />
+    <result column="Apartment" property="apartment" jdbcType="NVARCHAR" />
+    <result column="PropertyDirection" property="propertydirection" jdbcType="VARCHAR" />
+    <result column="Floor" property="floor" jdbcType="INTEGER" />
+    <result column="propertyType" property="propertytype" jdbcType="VARCHAR" />
+    <result column="PropertyTrade" property="propertytrade" jdbcType="VARCHAR" />
+    <result column="Propertykey" property="propertykey" jdbcType="INTEGER" />
+    <result column="Exclusive" property="exclusive" jdbcType="INTEGER" />
+    <result column="DutyFree" property="dutyfree" jdbcType="INTEGER" />
+    <result column="ExDate" property="exdate" jdbcType="TIMESTAMP" />
+    <result column="ModDate" property="moddate" jdbcType="TIMESTAMP" />
+    <result column="FlagTrashed" property="flagtrashed" jdbcType="BIT" />
+    <result column="FlagDeleted" property="flagdeleted" jdbcType="BIT" />
+    <result column="floorAll" property="floorall" jdbcType="INTEGER" />
+    <result column="StoreID" property="storeid" jdbcType="CHAR" />
+    <result column="decoration" property="decoration" jdbcType="VARCHAR" />
+    <result column="showUrl" property="showurl" jdbcType="NVARCHAR" />
+    <result column="storeShowUrl" property="storeshowurl" jdbcType="NVARCHAR" />
+    <result column="flagWeb" property="flagweb" jdbcType="BIT" />
+    <result column="CoverUrl" property="coverurl" jdbcType="NVARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.swjtu.WJKeServers.entity.Property" extends="BaseResultMap" >
+    <result column="PropertyBrief" property="propertybrief" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PropertyID, EstateID, EmpID, PropertyNo, Title, Square, Price, priceType, UnitPrice, 
+    unitPriceType, rentPrice, rentPriceType, firstPay, monthPay, Apartment, PropertyDirection, 
+    Floor, propertyType, PropertyTrade, Propertykey, Exclusive, DutyFree, ExDate, ModDate, 
+    FlagTrashed, FlagDeleted, floorAll, StoreID, decoration, showUrl, storeShowUrl, flagWeb, 
+    CoverUrl
+  </sql>
+  <sql id="Blob_Column_List" >
+    PropertyBrief
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.swjtu.WJKeServers.entity.PropertyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Property
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.swjtu.WJKeServers.entity.PropertyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Property
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Property
+    where PropertyID = #{propertyid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from Property
+    where PropertyID = #{propertyid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.swjtu.WJKeServers.entity.PropertyExample" >
+    delete from Property
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.swjtu.WJKeServers.entity.Property" >
+    insert into Property (PropertyID, EstateID, EmpID, 
+      PropertyNo, Title, Square, 
+      Price, priceType, UnitPrice, 
+      unitPriceType, rentPrice, rentPriceType, 
+      firstPay, monthPay, Apartment, 
+      PropertyDirection, Floor, propertyType, 
+      PropertyTrade, Propertykey, Exclusive, 
+      DutyFree, ExDate, ModDate, 
+      FlagTrashed, FlagDeleted, floorAll, 
+      StoreID, decoration, showUrl, 
+      storeShowUrl, flagWeb, CoverUrl, 
+      PropertyBrief)
+    values (#{propertyid,jdbcType=CHAR}, #{estateid,jdbcType=CHAR}, #{empid,jdbcType=CHAR}, 
+      #{propertyno,jdbcType=VARCHAR}, #{title,jdbcType=NVARCHAR}, #{square,jdbcType=DOUBLE}, 
+      #{price,jdbcType=DOUBLE}, #{pricetype,jdbcType=NVARCHAR}, #{unitprice,jdbcType=DOUBLE}, 
+      #{unitpricetype,jdbcType=NVARCHAR}, #{rentprice,jdbcType=DOUBLE}, #{rentpricetype,jdbcType=NVARCHAR}, 
+      #{firstpay,jdbcType=VARCHAR}, #{monthpay,jdbcType=VARCHAR}, #{apartment,jdbcType=NVARCHAR}, 
+      #{propertydirection,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{propertytype,jdbcType=VARCHAR}, 
+      #{propertytrade,jdbcType=VARCHAR}, #{propertykey,jdbcType=INTEGER}, #{exclusive,jdbcType=INTEGER}, 
+      #{dutyfree,jdbcType=INTEGER}, #{exdate,jdbcType=TIMESTAMP}, #{moddate,jdbcType=TIMESTAMP}, 
+      #{flagtrashed,jdbcType=BIT}, #{flagdeleted,jdbcType=BIT}, #{floorall,jdbcType=INTEGER}, 
+      #{storeid,jdbcType=CHAR}, #{decoration,jdbcType=VARCHAR}, #{showurl,jdbcType=NVARCHAR}, 
+      #{storeshowurl,jdbcType=NVARCHAR}, #{flagweb,jdbcType=BIT}, #{coverurl,jdbcType=NVARCHAR}, 
+      #{propertybrief,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.swjtu.WJKeServers.entity.Property" >
+    insert into Property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="propertyid != null" >
+        PropertyID,
+      </if>
+      <if test="estateid != null" >
+        EstateID,
+      </if>
+      <if test="empid != null" >
+        EmpID,
+      </if>
+      <if test="propertyno != null" >
+        PropertyNo,
+      </if>
+      <if test="title != null" >
+        Title,
+      </if>
+      <if test="square != null" >
+        Square,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="pricetype != null" >
+        priceType,
+      </if>
+      <if test="unitprice != null" >
+        UnitPrice,
+      </if>
+      <if test="unitpricetype != null" >
+        unitPriceType,
+      </if>
+      <if test="rentprice != null" >
+        rentPrice,
+      </if>
+      <if test="rentpricetype != null" >
+        rentPriceType,
+      </if>
+      <if test="firstpay != null" >
+        firstPay,
+      </if>
+      <if test="monthpay != null" >
+        monthPay,
+      </if>
+      <if test="apartment != null" >
+        Apartment,
+      </if>
+      <if test="propertydirection != null" >
+        PropertyDirection,
+      </if>
+      <if test="floor != null" >
+        Floor,
+      </if>
+      <if test="propertytype != null" >
+        propertyType,
+      </if>
+      <if test="propertytrade != null" >
+        PropertyTrade,
+      </if>
+      <if test="propertykey != null" >
+        Propertykey,
+      </if>
+      <if test="exclusive != null" >
+        Exclusive,
+      </if>
+      <if test="dutyfree != null" >
+        DutyFree,
+      </if>
+      <if test="exdate != null" >
+        ExDate,
+      </if>
+      <if test="moddate != null" >
+        ModDate,
+      </if>
+      <if test="flagtrashed != null" >
+        FlagTrashed,
+      </if>
+      <if test="flagdeleted != null" >
+        FlagDeleted,
+      </if>
+      <if test="floorall != null" >
+        floorAll,
+      </if>
+      <if test="storeid != null" >
+        StoreID,
+      </if>
+      <if test="decoration != null" >
+        decoration,
+      </if>
+      <if test="showurl != null" >
+        showUrl,
+      </if>
+      <if test="storeshowurl != null" >
+        storeShowUrl,
+      </if>
+      <if test="flagweb != null" >
+        flagWeb,
+      </if>
+      <if test="coverurl != null" >
+        CoverUrl,
+      </if>
+      <if test="propertybrief != null" >
+        PropertyBrief,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="propertyid != null" >
+        #{propertyid,jdbcType=CHAR},
+      </if>
+      <if test="estateid != null" >
+        #{estateid,jdbcType=CHAR},
+      </if>
+      <if test="empid != null" >
+        #{empid,jdbcType=CHAR},
+      </if>
+      <if test="propertyno != null" >
+        #{propertyno,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="square != null" >
+        #{square,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="pricetype != null" >
+        #{pricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="unitpricetype != null" >
+        #{unitpricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="rentprice != null" >
+        #{rentprice,jdbcType=DOUBLE},
+      </if>
+      <if test="rentpricetype != null" >
+        #{rentpricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="firstpay != null" >
+        #{firstpay,jdbcType=VARCHAR},
+      </if>
+      <if test="monthpay != null" >
+        #{monthpay,jdbcType=VARCHAR},
+      </if>
+      <if test="apartment != null" >
+        #{apartment,jdbcType=NVARCHAR},
+      </if>
+      <if test="propertydirection != null" >
+        #{propertydirection,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null" >
+        #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="propertytype != null" >
+        #{propertytype,jdbcType=VARCHAR},
+      </if>
+      <if test="propertytrade != null" >
+        #{propertytrade,jdbcType=VARCHAR},
+      </if>
+      <if test="propertykey != null" >
+        #{propertykey,jdbcType=INTEGER},
+      </if>
+      <if test="exclusive != null" >
+        #{exclusive,jdbcType=INTEGER},
+      </if>
+      <if test="dutyfree != null" >
+        #{dutyfree,jdbcType=INTEGER},
+      </if>
+      <if test="exdate != null" >
+        #{exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moddate != null" >
+        #{moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flagtrashed != null" >
+        #{flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="flagdeleted != null" >
+        #{flagdeleted,jdbcType=BIT},
+      </if>
+      <if test="floorall != null" >
+        #{floorall,jdbcType=INTEGER},
+      </if>
+      <if test="storeid != null" >
+        #{storeid,jdbcType=CHAR},
+      </if>
+      <if test="decoration != null" >
+        #{decoration,jdbcType=VARCHAR},
+      </if>
+      <if test="showurl != null" >
+        #{showurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="storeshowurl != null" >
+        #{storeshowurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="flagweb != null" >
+        #{flagweb,jdbcType=BIT},
+      </if>
+      <if test="coverurl != null" >
+        #{coverurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="propertybrief != null" >
+        #{propertybrief,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.swjtu.WJKeServers.entity.PropertyExample" resultType="java.lang.Integer" >
+    select count(*) from Property
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update Property
+    <set >
+      <if test="record.propertyid != null" >
+        PropertyID = #{record.propertyid,jdbcType=CHAR},
+      </if>
+      <if test="record.estateid != null" >
+        EstateID = #{record.estateid,jdbcType=CHAR},
+      </if>
+      <if test="record.empid != null" >
+        EmpID = #{record.empid,jdbcType=CHAR},
+      </if>
+      <if test="record.propertyno != null" >
+        PropertyNo = #{record.propertyno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        Title = #{record.title,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.square != null" >
+        Square = #{record.square,jdbcType=DOUBLE},
+      </if>
+      <if test="record.price != null" >
+        Price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pricetype != null" >
+        priceType = #{record.pricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.unitprice != null" >
+        UnitPrice = #{record.unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.unitpricetype != null" >
+        unitPriceType = #{record.unitpricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.rentprice != null" >
+        rentPrice = #{record.rentprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rentpricetype != null" >
+        rentPriceType = #{record.rentpricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.firstpay != null" >
+        firstPay = #{record.firstpay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monthpay != null" >
+        monthPay = #{record.monthpay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apartment != null" >
+        Apartment = #{record.apartment,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.propertydirection != null" >
+        PropertyDirection = #{record.propertydirection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.floor != null" >
+        Floor = #{record.floor,jdbcType=INTEGER},
+      </if>
+      <if test="record.propertytype != null" >
+        propertyType = #{record.propertytype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertytrade != null" >
+        PropertyTrade = #{record.propertytrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertykey != null" >
+        Propertykey = #{record.propertykey,jdbcType=INTEGER},
+      </if>
+      <if test="record.exclusive != null" >
+        Exclusive = #{record.exclusive,jdbcType=INTEGER},
+      </if>
+      <if test="record.dutyfree != null" >
+        DutyFree = #{record.dutyfree,jdbcType=INTEGER},
+      </if>
+      <if test="record.exdate != null" >
+        ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.moddate != null" >
+        ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flagtrashed != null" >
+        FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="record.flagdeleted != null" >
+        FlagDeleted = #{record.flagdeleted,jdbcType=BIT},
+      </if>
+      <if test="record.floorall != null" >
+        floorAll = #{record.floorall,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeid != null" >
+        StoreID = #{record.storeid,jdbcType=CHAR},
+      </if>
+      <if test="record.decoration != null" >
+        decoration = #{record.decoration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showurl != null" >
+        showUrl = #{record.showurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.storeshowurl != null" >
+        storeShowUrl = #{record.storeshowurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.flagweb != null" >
+        flagWeb = #{record.flagweb,jdbcType=BIT},
+      </if>
+      <if test="record.coverurl != null" >
+        CoverUrl = #{record.coverurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.propertybrief != null" >
+        PropertyBrief = #{record.propertybrief,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update Property
+    set PropertyID = #{record.propertyid,jdbcType=CHAR},
+      EstateID = #{record.estateid,jdbcType=CHAR},
+      EmpID = #{record.empid,jdbcType=CHAR},
+      PropertyNo = #{record.propertyno,jdbcType=VARCHAR},
+      Title = #{record.title,jdbcType=NVARCHAR},
+      Square = #{record.square,jdbcType=DOUBLE},
+      Price = #{record.price,jdbcType=DOUBLE},
+      priceType = #{record.pricetype,jdbcType=NVARCHAR},
+      UnitPrice = #{record.unitprice,jdbcType=DOUBLE},
+      unitPriceType = #{record.unitpricetype,jdbcType=NVARCHAR},
+      rentPrice = #{record.rentprice,jdbcType=DOUBLE},
+      rentPriceType = #{record.rentpricetype,jdbcType=NVARCHAR},
+      firstPay = #{record.firstpay,jdbcType=VARCHAR},
+      monthPay = #{record.monthpay,jdbcType=VARCHAR},
+      Apartment = #{record.apartment,jdbcType=NVARCHAR},
+      PropertyDirection = #{record.propertydirection,jdbcType=VARCHAR},
+      Floor = #{record.floor,jdbcType=INTEGER},
+      propertyType = #{record.propertytype,jdbcType=VARCHAR},
+      PropertyTrade = #{record.propertytrade,jdbcType=VARCHAR},
+      Propertykey = #{record.propertykey,jdbcType=INTEGER},
+      Exclusive = #{record.exclusive,jdbcType=INTEGER},
+      DutyFree = #{record.dutyfree,jdbcType=INTEGER},
+      ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{record.flagdeleted,jdbcType=BIT},
+      floorAll = #{record.floorall,jdbcType=INTEGER},
+      StoreID = #{record.storeid,jdbcType=CHAR},
+      decoration = #{record.decoration,jdbcType=VARCHAR},
+      showUrl = #{record.showurl,jdbcType=NVARCHAR},
+      storeShowUrl = #{record.storeshowurl,jdbcType=NVARCHAR},
+      flagWeb = #{record.flagweb,jdbcType=BIT},
+      CoverUrl = #{record.coverurl,jdbcType=NVARCHAR},
+      PropertyBrief = #{record.propertybrief,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update Property
+    set PropertyID = #{record.propertyid,jdbcType=CHAR},
+      EstateID = #{record.estateid,jdbcType=CHAR},
+      EmpID = #{record.empid,jdbcType=CHAR},
+      PropertyNo = #{record.propertyno,jdbcType=VARCHAR},
+      Title = #{record.title,jdbcType=NVARCHAR},
+      Square = #{record.square,jdbcType=DOUBLE},
+      Price = #{record.price,jdbcType=DOUBLE},
+      priceType = #{record.pricetype,jdbcType=NVARCHAR},
+      UnitPrice = #{record.unitprice,jdbcType=DOUBLE},
+      unitPriceType = #{record.unitpricetype,jdbcType=NVARCHAR},
+      rentPrice = #{record.rentprice,jdbcType=DOUBLE},
+      rentPriceType = #{record.rentpricetype,jdbcType=NVARCHAR},
+      firstPay = #{record.firstpay,jdbcType=VARCHAR},
+      monthPay = #{record.monthpay,jdbcType=VARCHAR},
+      Apartment = #{record.apartment,jdbcType=NVARCHAR},
+      PropertyDirection = #{record.propertydirection,jdbcType=VARCHAR},
+      Floor = #{record.floor,jdbcType=INTEGER},
+      propertyType = #{record.propertytype,jdbcType=VARCHAR},
+      PropertyTrade = #{record.propertytrade,jdbcType=VARCHAR},
+      Propertykey = #{record.propertykey,jdbcType=INTEGER},
+      Exclusive = #{record.exclusive,jdbcType=INTEGER},
+      DutyFree = #{record.dutyfree,jdbcType=INTEGER},
+      ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{record.flagdeleted,jdbcType=BIT},
+      floorAll = #{record.floorall,jdbcType=INTEGER},
+      StoreID = #{record.storeid,jdbcType=CHAR},
+      decoration = #{record.decoration,jdbcType=VARCHAR},
+      showUrl = #{record.showurl,jdbcType=NVARCHAR},
+      storeShowUrl = #{record.storeshowurl,jdbcType=NVARCHAR},
+      flagWeb = #{record.flagweb,jdbcType=BIT},
+      CoverUrl = #{record.coverurl,jdbcType=NVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.swjtu.WJKeServers.entity.Property" >
+    update Property
+    <set >
+      <if test="estateid != null" >
+        EstateID = #{estateid,jdbcType=CHAR},
+      </if>
+      <if test="empid != null" >
+        EmpID = #{empid,jdbcType=CHAR},
+      </if>
+      <if test="propertyno != null" >
+        PropertyNo = #{propertyno,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        Title = #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="square != null" >
+        Square = #{square,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        Price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="pricetype != null" >
+        priceType = #{pricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        UnitPrice = #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="unitpricetype != null" >
+        unitPriceType = #{unitpricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="rentprice != null" >
+        rentPrice = #{rentprice,jdbcType=DOUBLE},
+      </if>
+      <if test="rentpricetype != null" >
+        rentPriceType = #{rentpricetype,jdbcType=NVARCHAR},
+      </if>
+      <if test="firstpay != null" >
+        firstPay = #{firstpay,jdbcType=VARCHAR},
+      </if>
+      <if test="monthpay != null" >
+        monthPay = #{monthpay,jdbcType=VARCHAR},
+      </if>
+      <if test="apartment != null" >
+        Apartment = #{apartment,jdbcType=NVARCHAR},
+      </if>
+      <if test="propertydirection != null" >
+        PropertyDirection = #{propertydirection,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null" >
+        Floor = #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="propertytype != null" >
+        propertyType = #{propertytype,jdbcType=VARCHAR},
+      </if>
+      <if test="propertytrade != null" >
+        PropertyTrade = #{propertytrade,jdbcType=VARCHAR},
+      </if>
+      <if test="propertykey != null" >
+        Propertykey = #{propertykey,jdbcType=INTEGER},
+      </if>
+      <if test="exclusive != null" >
+        Exclusive = #{exclusive,jdbcType=INTEGER},
+      </if>
+      <if test="dutyfree != null" >
+        DutyFree = #{dutyfree,jdbcType=INTEGER},
+      </if>
+      <if test="exdate != null" >
+        ExDate = #{exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moddate != null" >
+        ModDate = #{moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flagtrashed != null" >
+        FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="flagdeleted != null" >
+        FlagDeleted = #{flagdeleted,jdbcType=BIT},
+      </if>
+      <if test="floorall != null" >
+        floorAll = #{floorall,jdbcType=INTEGER},
+      </if>
+      <if test="storeid != null" >
+        StoreID = #{storeid,jdbcType=CHAR},
+      </if>
+      <if test="decoration != null" >
+        decoration = #{decoration,jdbcType=VARCHAR},
+      </if>
+      <if test="showurl != null" >
+        showUrl = #{showurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="storeshowurl != null" >
+        storeShowUrl = #{storeshowurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="flagweb != null" >
+        flagWeb = #{flagweb,jdbcType=BIT},
+      </if>
+      <if test="coverurl != null" >
+        CoverUrl = #{coverurl,jdbcType=NVARCHAR},
+      </if>
+      <if test="propertybrief != null" >
+        PropertyBrief = #{propertybrief,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where PropertyID = #{propertyid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.swjtu.WJKeServers.entity.Property" >
+    update Property
+    set EstateID = #{estateid,jdbcType=CHAR},
+      EmpID = #{empid,jdbcType=CHAR},
+      PropertyNo = #{propertyno,jdbcType=VARCHAR},
+      Title = #{title,jdbcType=NVARCHAR},
+      Square = #{square,jdbcType=DOUBLE},
+      Price = #{price,jdbcType=DOUBLE},
+      priceType = #{pricetype,jdbcType=NVARCHAR},
+      UnitPrice = #{unitprice,jdbcType=DOUBLE},
+      unitPriceType = #{unitpricetype,jdbcType=NVARCHAR},
+      rentPrice = #{rentprice,jdbcType=DOUBLE},
+      rentPriceType = #{rentpricetype,jdbcType=NVARCHAR},
+      firstPay = #{firstpay,jdbcType=VARCHAR},
+      monthPay = #{monthpay,jdbcType=VARCHAR},
+      Apartment = #{apartment,jdbcType=NVARCHAR},
+      PropertyDirection = #{propertydirection,jdbcType=VARCHAR},
+      Floor = #{floor,jdbcType=INTEGER},
+      propertyType = #{propertytype,jdbcType=VARCHAR},
+      PropertyTrade = #{propertytrade,jdbcType=VARCHAR},
+      Propertykey = #{propertykey,jdbcType=INTEGER},
+      Exclusive = #{exclusive,jdbcType=INTEGER},
+      DutyFree = #{dutyfree,jdbcType=INTEGER},
+      ExDate = #{exdate,jdbcType=TIMESTAMP},
+      ModDate = #{moddate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{flagdeleted,jdbcType=BIT},
+      floorAll = #{floorall,jdbcType=INTEGER},
+      StoreID = #{storeid,jdbcType=CHAR},
+      decoration = #{decoration,jdbcType=VARCHAR},
+      showUrl = #{showurl,jdbcType=NVARCHAR},
+      storeShowUrl = #{storeshowurl,jdbcType=NVARCHAR},
+      flagWeb = #{flagweb,jdbcType=BIT},
+      CoverUrl = #{coverurl,jdbcType=NVARCHAR},
+      PropertyBrief = #{propertybrief,jdbcType=LONGVARCHAR}
+    where PropertyID = #{propertyid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.swjtu.WJKeServers.entity.Property" >
+    update Property
+    set EstateID = #{estateid,jdbcType=CHAR},
+      EmpID = #{empid,jdbcType=CHAR},
+      PropertyNo = #{propertyno,jdbcType=VARCHAR},
+      Title = #{title,jdbcType=NVARCHAR},
+      Square = #{square,jdbcType=DOUBLE},
+      Price = #{price,jdbcType=DOUBLE},
+      priceType = #{pricetype,jdbcType=NVARCHAR},
+      UnitPrice = #{unitprice,jdbcType=DOUBLE},
+      unitPriceType = #{unitpricetype,jdbcType=NVARCHAR},
+      rentPrice = #{rentprice,jdbcType=DOUBLE},
+      rentPriceType = #{rentpricetype,jdbcType=NVARCHAR},
+      firstPay = #{firstpay,jdbcType=VARCHAR},
+      monthPay = #{monthpay,jdbcType=VARCHAR},
+      Apartment = #{apartment,jdbcType=NVARCHAR},
+      PropertyDirection = #{propertydirection,jdbcType=VARCHAR},
+      Floor = #{floor,jdbcType=INTEGER},
+      propertyType = #{propertytype,jdbcType=VARCHAR},
+      PropertyTrade = #{propertytrade,jdbcType=VARCHAR},
+      Propertykey = #{propertykey,jdbcType=INTEGER},
+      Exclusive = #{exclusive,jdbcType=INTEGER},
+      DutyFree = #{dutyfree,jdbcType=INTEGER},
+      ExDate = #{exdate,jdbcType=TIMESTAMP},
+      ModDate = #{moddate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{flagdeleted,jdbcType=BIT},
+      floorAll = #{floorall,jdbcType=INTEGER},
+      StoreID = #{storeid,jdbcType=CHAR},
+      decoration = #{decoration,jdbcType=VARCHAR},
+      showUrl = #{showurl,jdbcType=NVARCHAR},
+      storeShowUrl = #{storeshowurl,jdbcType=NVARCHAR},
+      flagWeb = #{flagweb,jdbcType=BIT},
+      CoverUrl = #{coverurl,jdbcType=NVARCHAR}
+    where PropertyID = #{propertyid,jdbcType=CHAR}
+  </update>
+</mapper>

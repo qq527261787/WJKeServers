@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="WJKeServers:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="WJKeServers.war">
+      <element id="artifact" artifact-name="WJKeServers:war exploded" />
+    </root>
+  </artifact>
+</component>

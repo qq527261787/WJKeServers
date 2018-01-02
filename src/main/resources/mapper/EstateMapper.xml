@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swjtu.WJKeServers.mapper.EstateMapper" >
+  <resultMap id="BaseResultMap" type="com.swjtu.WJKeServers.entity.Estate" >
+    <id column="EstateID" property="estateid" jdbcType="CHAR" />
+    <result column="EstateName" property="estatename" jdbcType="NVARCHAR" />
+    <result column="AreaID" property="areaid" jdbcType="CHAR" />
+    <result column="CityName" property="cityname" jdbcType="NVARCHAR" />
+    <result column="DistrictName" property="districtname" jdbcType="NVARCHAR" />
+    <result column="AreaName" property="areaname" jdbcType="NVARCHAR" />
+    <result column="Price" property="price" jdbcType="DOUBLE" />
+    <result column="CompleteYear" property="completeyear" jdbcType="VARCHAR" />
+    <result column="BuildType" property="buildtype" jdbcType="VARCHAR" />
+    <result column="MgtPrice" property="mgtprice" jdbcType="NVARCHAR" />
+    <result column="MgtCompany" property="mgtcompany" jdbcType="NVARCHAR" />
+    <result column="DevCompany" property="devcompany" jdbcType="NVARCHAR" />
+    <result column="RpRatio" property="rpratio" jdbcType="DOUBLE" />
+    <result column="GreenRatio" property="greenratio" jdbcType="DOUBLE" />
+    <result column="BuildNum" property="buildnum" jdbcType="NVARCHAR" />
+    <result column="Room" property="room" jdbcType="INTEGER" />
+    <result column="Address" property="address" jdbcType="VARCHAR" />
+    <result column="Url" property="url" jdbcType="NVARCHAR" />
+    <result column="ModDate" property="moddate" jdbcType="TIMESTAMP" />
+    <result column="ExDate" property="exdate" jdbcType="TIMESTAMP" />
+    <result column="FlagTrashed" property="flagtrashed" jdbcType="BIT" />
+    <result column="FlagDeleted" property="flagdeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EstateID, EstateName, AreaID, CityName, DistrictName, AreaName, Price, CompleteYear, 
+    BuildType, MgtPrice, MgtCompany, DevCompany, RpRatio, GreenRatio, BuildNum, Room, 
+    Address, Url, ModDate, ExDate, FlagTrashed, FlagDeleted
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.swjtu.WJKeServers.entity.EstateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Estate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from Estate
+    where EstateID = #{estateid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from Estate
+    where EstateID = #{estateid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.swjtu.WJKeServers.entity.EstateExample" >
+    delete from Estate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.swjtu.WJKeServers.entity.Estate" >
+    insert into Estate (EstateID, EstateName, AreaID, 
+      CityName, DistrictName, AreaName, 
+      Price, CompleteYear, BuildType, 
+      MgtPrice, MgtCompany, DevCompany, 
+      RpRatio, GreenRatio, BuildNum, 
+      Room, Address, Url, 
+      ModDate, ExDate, FlagTrashed, 
+      FlagDeleted)
+    values (#{estateid,jdbcType=CHAR}, #{estatename,jdbcType=NVARCHAR}, #{areaid,jdbcType=CHAR}, 
+      #{cityname,jdbcType=NVARCHAR}, #{districtname,jdbcType=NVARCHAR}, #{areaname,jdbcType=NVARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{completeyear,jdbcType=VARCHAR}, #{buildtype,jdbcType=VARCHAR}, 
+      #{mgtprice,jdbcType=NVARCHAR}, #{mgtcompany,jdbcType=NVARCHAR}, #{devcompany,jdbcType=NVARCHAR}, 
+      #{rpratio,jdbcType=DOUBLE}, #{greenratio,jdbcType=DOUBLE}, #{buildnum,jdbcType=NVARCHAR}, 
+      #{room,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{url,jdbcType=NVARCHAR}, 
+      #{moddate,jdbcType=TIMESTAMP}, #{exdate,jdbcType=TIMESTAMP}, #{flagtrashed,jdbcType=BIT}, 
+      #{flagdeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.swjtu.WJKeServers.entity.Estate" >
+    insert into Estate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="estateid != null" >
+        EstateID,
+      </if>
+      <if test="estatename != null" >
+        EstateName,
+      </if>
+      <if test="areaid != null" >
+        AreaID,
+      </if>
+      <if test="cityname != null" >
+        CityName,
+      </if>
+      <if test="districtname != null" >
+        DistrictName,
+      </if>
+      <if test="areaname != null" >
+        AreaName,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="completeyear != null" >
+        CompleteYear,
+      </if>
+      <if test="buildtype != null" >
+        BuildType,
+      </if>
+      <if test="mgtprice != null" >
+        MgtPrice,
+      </if>
+      <if test="mgtcompany != null" >
+        MgtCompany,
+      </if>
+      <if test="devcompany != null" >
+        DevCompany,
+      </if>
+      <if test="rpratio != null" >
+        RpRatio,
+      </if>
+      <if test="greenratio != null" >
+        GreenRatio,
+      </if>
+      <if test="buildnum != null" >
+        BuildNum,
+      </if>
+      <if test="room != null" >
+        Room,
+      </if>
+      <if test="address != null" >
+        Address,
+      </if>
+      <if test="url != null" >
+        Url,
+      </if>
+      <if test="moddate != null" >
+        ModDate,
+      </if>
+      <if test="exdate != null" >
+        ExDate,
+      </if>
+      <if test="flagtrashed != null" >
+        FlagTrashed,
+      </if>
+      <if test="flagdeleted != null" >
+        FlagDeleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="estateid != null" >
+        #{estateid,jdbcType=CHAR},
+      </if>
+      <if test="estatename != null" >
+        #{estatename,jdbcType=NVARCHAR},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=CHAR},
+      </if>
+      <if test="cityname != null" >
+        #{cityname,jdbcType=NVARCHAR},
+      </if>
+      <if test="districtname != null" >
+        #{districtname,jdbcType=NVARCHAR},
+      </if>
+      <if test="areaname != null" >
+        #{areaname,jdbcType=NVARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="completeyear != null" >
+        #{completeyear,jdbcType=VARCHAR},
+      </if>
+      <if test="buildtype != null" >
+        #{buildtype,jdbcType=VARCHAR},
+      </if>
+      <if test="mgtprice != null" >
+        #{mgtprice,jdbcType=NVARCHAR},
+      </if>
+      <if test="mgtcompany != null" >
+        #{mgtcompany,jdbcType=NVARCHAR},
+      </if>
+      <if test="devcompany != null" >
+        #{devcompany,jdbcType=NVARCHAR},
+      </if>
+      <if test="rpratio != null" >
+        #{rpratio,jdbcType=DOUBLE},
+      </if>
+      <if test="greenratio != null" >
+        #{greenratio,jdbcType=DOUBLE},
+      </if>
+      <if test="buildnum != null" >
+        #{buildnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="room != null" >
+        #{room,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=NVARCHAR},
+      </if>
+      <if test="moddate != null" >
+        #{moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exdate != null" >
+        #{exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flagtrashed != null" >
+        #{flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="flagdeleted != null" >
+        #{flagdeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.swjtu.WJKeServers.entity.EstateExample" resultType="java.lang.Integer" >
+    select count(*) from Estate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update Estate
+    <set >
+      <if test="record.estateid != null" >
+        EstateID = #{record.estateid,jdbcType=CHAR},
+      </if>
+      <if test="record.estatename != null" >
+        EstateName = #{record.estatename,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.areaid != null" >
+        AreaID = #{record.areaid,jdbcType=CHAR},
+      </if>
+      <if test="record.cityname != null" >
+        CityName = #{record.cityname,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.districtname != null" >
+        DistrictName = #{record.districtname,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.areaname != null" >
+        AreaName = #{record.areaname,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.price != null" >
+        Price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.completeyear != null" >
+        CompleteYear = #{record.completeyear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildtype != null" >
+        BuildType = #{record.buildtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mgtprice != null" >
+        MgtPrice = #{record.mgtprice,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.mgtcompany != null" >
+        MgtCompany = #{record.mgtcompany,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.devcompany != null" >
+        DevCompany = #{record.devcompany,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.rpratio != null" >
+        RpRatio = #{record.rpratio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.greenratio != null" >
+        GreenRatio = #{record.greenratio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.buildnum != null" >
+        BuildNum = #{record.buildnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.room != null" >
+        Room = #{record.room,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        Address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        Url = #{record.url,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.moddate != null" >
+        ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.exdate != null" >
+        ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flagtrashed != null" >
+        FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="record.flagdeleted != null" >
+        FlagDeleted = #{record.flagdeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update Estate
+    set EstateID = #{record.estateid,jdbcType=CHAR},
+      EstateName = #{record.estatename,jdbcType=NVARCHAR},
+      AreaID = #{record.areaid,jdbcType=CHAR},
+      CityName = #{record.cityname,jdbcType=NVARCHAR},
+      DistrictName = #{record.districtname,jdbcType=NVARCHAR},
+      AreaName = #{record.areaname,jdbcType=NVARCHAR},
+      Price = #{record.price,jdbcType=DOUBLE},
+      CompleteYear = #{record.completeyear,jdbcType=VARCHAR},
+      BuildType = #{record.buildtype,jdbcType=VARCHAR},
+      MgtPrice = #{record.mgtprice,jdbcType=NVARCHAR},
+      MgtCompany = #{record.mgtcompany,jdbcType=NVARCHAR},
+      DevCompany = #{record.devcompany,jdbcType=NVARCHAR},
+      RpRatio = #{record.rpratio,jdbcType=DOUBLE},
+      GreenRatio = #{record.greenratio,jdbcType=DOUBLE},
+      BuildNum = #{record.buildnum,jdbcType=NVARCHAR},
+      Room = #{record.room,jdbcType=INTEGER},
+      Address = #{record.address,jdbcType=VARCHAR},
+      Url = #{record.url,jdbcType=NVARCHAR},
+      ModDate = #{record.moddate,jdbcType=TIMESTAMP},
+      ExDate = #{record.exdate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{record.flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{record.flagdeleted,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.swjtu.WJKeServers.entity.Estate" >
+    update Estate
+    <set >
+      <if test="estatename != null" >
+        EstateName = #{estatename,jdbcType=NVARCHAR},
+      </if>
+      <if test="areaid != null" >
+        AreaID = #{areaid,jdbcType=CHAR},
+      </if>
+      <if test="cityname != null" >
+        CityName = #{cityname,jdbcType=NVARCHAR},
+      </if>
+      <if test="districtname != null" >
+        DistrictName = #{districtname,jdbcType=NVARCHAR},
+      </if>
+      <if test="areaname != null" >
+        AreaName = #{areaname,jdbcType=NVARCHAR},
+      </if>
+      <if test="price != null" >
+        Price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="completeyear != null" >
+        CompleteYear = #{completeyear,jdbcType=VARCHAR},
+      </if>
+      <if test="buildtype != null" >
+        BuildType = #{buildtype,jdbcType=VARCHAR},
+      </if>
+      <if test="mgtprice != null" >
+        MgtPrice = #{mgtprice,jdbcType=NVARCHAR},
+      </if>
+      <if test="mgtcompany != null" >
+        MgtCompany = #{mgtcompany,jdbcType=NVARCHAR},
+      </if>
+      <if test="devcompany != null" >
+        DevCompany = #{devcompany,jdbcType=NVARCHAR},
+      </if>
+      <if test="rpratio != null" >
+        RpRatio = #{rpratio,jdbcType=DOUBLE},
+      </if>
+      <if test="greenratio != null" >
+        GreenRatio = #{greenratio,jdbcType=DOUBLE},
+      </if>
+      <if test="buildnum != null" >
+        BuildNum = #{buildnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="room != null" >
+        Room = #{room,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        Address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        Url = #{url,jdbcType=NVARCHAR},
+      </if>
+      <if test="moddate != null" >
+        ModDate = #{moddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exdate != null" >
+        ExDate = #{exdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flagtrashed != null" >
+        FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      </if>
+      <if test="flagdeleted != null" >
+        FlagDeleted = #{flagdeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where EstateID = #{estateid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.swjtu.WJKeServers.entity.Estate" >
+    update Estate
+    set EstateName = #{estatename,jdbcType=NVARCHAR},
+      AreaID = #{areaid,jdbcType=CHAR},
+      CityName = #{cityname,jdbcType=NVARCHAR},
+      DistrictName = #{districtname,jdbcType=NVARCHAR},
+      AreaName = #{areaname,jdbcType=NVARCHAR},
+      Price = #{price,jdbcType=DOUBLE},
+      CompleteYear = #{completeyear,jdbcType=VARCHAR},
+      BuildType = #{buildtype,jdbcType=VARCHAR},
+      MgtPrice = #{mgtprice,jdbcType=NVARCHAR},
+      MgtCompany = #{mgtcompany,jdbcType=NVARCHAR},
+      DevCompany = #{devcompany,jdbcType=NVARCHAR},
+      RpRatio = #{rpratio,jdbcType=DOUBLE},
+      GreenRatio = #{greenratio,jdbcType=DOUBLE},
+      BuildNum = #{buildnum,jdbcType=NVARCHAR},
+      Room = #{room,jdbcType=INTEGER},
+      Address = #{address,jdbcType=VARCHAR},
+      Url = #{url,jdbcType=NVARCHAR},
+      ModDate = #{moddate,jdbcType=TIMESTAMP},
+      ExDate = #{exdate,jdbcType=TIMESTAMP},
+      FlagTrashed = #{flagtrashed,jdbcType=BIT},
+      FlagDeleted = #{flagdeleted,jdbcType=BIT}
+    where EstateID = #{estateid,jdbcType=CHAR}
+  </update>
+</mapper>
