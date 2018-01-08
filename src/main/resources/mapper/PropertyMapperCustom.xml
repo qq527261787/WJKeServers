@@ -4,10 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.swjtu.WJKeServers.mapper.PropertyMapperCustom">
 
-    <select id="queryEnjoy" resultType="com.swjtu.WJKeServers.entity.Property" parameterType="String">
-      SELECT *
-      FROM Property p, Estate e
+    <select id="queryEnjoy" resultType="com.swjtu.WJKeServers.entityCustom.PropertyCustom" parameterType="String">
+      select p.propertyid, p.estateid, p.empid, p.propertyno, p.title, p.propertybrief, p.square, p.price, p.pricetype, p.unitprice, p.unitpricetype, p.rentprice, p.rentpricetype, p.firstpay, p.monthpay, p.apartment, propertydirection, p.floor, p.propertytype, p.propertytrade, p.propertykey, p.moddate, p.floorall, p.decoration, p.flagweb, p.flagtrashed, e.estatename, e.areaid, e.cityname, e.districtname, e.areaname, e.completeyear, e.buildtype, e.mgtprice, e.mgtcompany, e.devcompany, e.address
+      from Property p, Estate e
       where p.EstateID = e.EstateID and e.CityName = #{address}
+    </select>
+
+    <select id="queryRenting" resultType="com.swjtu.WJKeServers.entityCustom.PropertyCustom" parameterType="String">
+        select p.propertyid, p.estateid, p.empid, p.propertyno, p.title, p.propertybrief, p.square, p.price, p.pricetype, p.unitprice, p.unitpricetype, p.rentprice, p.rentpricetype, p.firstpay, p.monthpay, p.apartment, propertydirection, p.floor, p.propertytype, p.propertytrade, p.propertykey, p.moddate, p.floorall, p.decoration, p.flagweb, p.flagtrashed, e.estatename, e.areaid, e.cityname, e.districtname, e.areaname, e.completeyear, e.buildtype, e.mgtprice, e.mgtcompany, e.devcompany, e.address
+        from Property p, Estate e
+        where p.EstateID = e.EstateID and e.CityName = #{address} and p.propertytrade = '出租'
+    </select>
+
+    <select id="queryPurchase" resultType="com.swjtu.WJKeServers.entityCustom.PropertyCustom" parameterType="String">
+        select p.propertyid, p.estateid, p.empid, p.propertyno, p.title, p.propertybrief, p.square, p.price, p.pricetype, p.unitprice, p.unitpricetype, p.rentprice, p.rentpricetype, p.firstpay, p.monthpay, p.apartment, propertydirection, p.floor, p.propertytype, p.propertytrade, p.propertykey, p.moddate, p.floorall, p.decoration, p.flagweb, p.flagtrashed, e.estatename, e.areaid, e.cityname, e.districtname, e.areaname, e.completeyear, e.buildtype, e.mgtprice, e.mgtcompany, e.devcompany, e.address
+        from Property p, Estate e
+        where p.EstateID = e.EstateID and e.CityName = #{address} and p.propertytrade = '出售'
     </select>
 
 </mapper>
